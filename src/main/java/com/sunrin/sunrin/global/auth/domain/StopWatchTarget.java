@@ -2,7 +2,6 @@ package com.sunrin.sunrin.global.auth.domain;
 
 public class StopWatchTarget {
     private String username;
-
     public StopWatchTarget(String username) {
         this.username = username;
     }
