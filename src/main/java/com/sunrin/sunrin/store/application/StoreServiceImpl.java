@@ -3,7 +3,6 @@ package com.sunrin.sunrin.store.application;
 import com.sunrin.sunrin.store.dao.StoreRepository;
 import com.sunrin.sunrin.store.domain.StoreComponent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,15 +35,14 @@ public class StoreServiceImpl implements StoreService{
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable("storeCache")
-    public List<StoreComponent> findAll() {
-        return storeRepository.findAll();
+    public Optional<StoreComponent> findById(UUID id) {
+        return storeRepository.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<StoreComponent> findById(UUID id) {
-        return storeRepository.findById(id);
+    public List<StoreComponent> findAll() {
+        return storeRepository.findAll();
     }
 
     @Override
