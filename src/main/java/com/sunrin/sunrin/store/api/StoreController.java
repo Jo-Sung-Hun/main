@@ -42,4 +42,9 @@ public class StoreController {
         StoreDTO storeDTO = objectMapper.readValue(json, StoreDTO.class);
         return new ResponseEntity<>(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(storeService.findByCategory(storeDTO.getCategory())), org.springframework.http.HttpStatus.OK);
     }
+    @RequestMapping(value = "/api/v1/store/findall", method = RequestMethod.GET)
+
+    public Object getStoreComponentAll() throws JsonProcessingException {
+        return new ResponseEntity<>(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(storeService.findAll()), org.springframework.http.HttpStatus.OK);
+    }
 }

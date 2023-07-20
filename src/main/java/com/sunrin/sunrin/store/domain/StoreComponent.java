@@ -5,10 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Builder;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-public class StoreComponent {
+public class StoreComponent implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid2")
     private UUID uuid;
