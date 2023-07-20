@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PartyCRUDService {
-    Optional<PartyEntity> save(PartyDTO partyDTO);
-    Optional<PartyEntity> update(PartyDTO partyDTO);
+    Optional<PartyEntity> save(PartyEntity partyDTO);
+    Optional<PartyEntity> update(PartyEntity partyDTO);
+
     void delete(PartyDTO partyDTO);
     Boolean isExistParty(PartyDTO partyDTO);
     List<PartyEntity> findByOwnerUsername(String ownerUsername);

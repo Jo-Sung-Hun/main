@@ -12,4 +12,5 @@ public class UserServiceInfoEntity {
     @GeneratedValue(generator = "uuid2")
     private UUID uuid;
 
+
 }

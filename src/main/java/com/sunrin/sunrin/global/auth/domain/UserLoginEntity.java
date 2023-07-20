@@ -2,10 +2,12 @@ package com.sunrin.sunrin.global.auth.domain;
 
 
 import com.sunrin.sunrin.global.auth.dto.UserLoginData;
+import com.sunrin.sunrin.party.domain.PartyEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,13 +19,13 @@ public class UserLoginEntity implements Serializable {
     private String userLoginUsername;
     @Column(nullable = false, length = 9999999)
     private String userLoginPassword;
-    @OneToOne
-    private UserServiceInfoEntity userServiceInfoEntity;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<PartyEntity> partyEntities;
+    private String stopwatchLocalDateTime;
     @Builder
     public UserLoginEntity(String userLoginUsername, String userLoginPassword) {
         this.userLoginUsername = userLoginUsername;
         this.userLoginPassword = userLoginPassword;
-
     }
 
     @Builder
@@ -33,6 +35,30 @@ public class UserLoginEntity implements Serializable {
     }
 
     public UserLoginEntity() {
+    }
+
+    public String getUserLoginUsername() {
+        return userLoginUsername;
+    }
+
+    public String getStopwatchLocalDateTime() {
+        return stopwatchLocalDateTime;
+    }
+
+    public void setStopwatchLocalDateTime(String stopwatchLocalDateTime) {
+        this.stopwatchLocalDateTime = stopwatchLocalDateTime;
+    }
+
+    public void setUserLoginUsername(String userLoginUsername) {
+        this.userLoginUsername = userLoginUsername;
+    }
+
+    public List<PartyEntity> getPartyEntities() {
+        return partyEntities;
+    }
+
+    public void setPartyEntities(List<PartyEntity> partyEntities) {
+        this.partyEntities = partyEntities;
     }
 
     public UUID getUuid() {

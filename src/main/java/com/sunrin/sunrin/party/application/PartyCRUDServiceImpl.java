@@ -25,12 +25,12 @@ public class PartyCRUDServiceImpl implements PartyCRUDService{
     }
 
     @Override
-    public Optional<PartyEntity> save(PartyDTO partyDTO) {
-        return Optional.of(partyRepository.save(partyDTO.toEntity()));
+    public Optional<PartyEntity> save(PartyEntity partyDTO) {
+        return Optional.of(partyRepository.save(partyDTO));
     }
 
     @Override
-    public Optional<PartyEntity> update(PartyDTO partyDTO) {
+    public Optional<PartyEntity> update(PartyEntity partyDTO) {
         return save(partyDTO);
     }
 
