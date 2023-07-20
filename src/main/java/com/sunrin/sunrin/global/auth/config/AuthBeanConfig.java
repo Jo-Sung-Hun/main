@@ -10,6 +10,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class AuthBeanConfig {
@@ -22,6 +23,8 @@ public class AuthBeanConfig {
     private ObjectMapper objectMapper;
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Bean
     public UserAuthRepositoryImpl userAuthRepository() {
         return new UserAuthRepositoryImpl(entityManager, userRepository);
@@ -32,6 +35,6 @@ public class AuthBeanConfig {
     }
     @Bean
     public UserAuthServiceImpl userAuthService() {
-        return new UserAuthServiceImpl(userAuthRepository(), principalDetailsService(), objectMapper, jwtUtil, userRepository);
+        return new UserAuthServiceImpl(userAuthRepository(), principalDetailsService(), objectMapper, jwtUtil, userRepository, bCryptPasswordEncoder);
     }
 }

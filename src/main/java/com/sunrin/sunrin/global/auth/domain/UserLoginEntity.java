@@ -22,14 +22,17 @@ public class UserLoginEntity implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<PartyEntity> partyEntities;
     private String stopwatchLocalDateTime;
+    private String role;
     @Builder
     public UserLoginEntity(String userLoginUsername, String userLoginPassword) {
+        this.role = "ROLE_USER";
         this.userLoginUsername = userLoginUsername;
         this.userLoginPassword = userLoginPassword;
     }
 
     @Builder
     public UserLoginEntity(UserLoginData accountReqDto) {
+        this.role = "ROLE_USER";
         this.userLoginUsername = accountReqDto.getUserLoginEmail();
         this.userLoginPassword = accountReqDto.getUserLoginPassword();
     }

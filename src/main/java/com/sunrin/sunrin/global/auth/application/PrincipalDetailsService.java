@@ -2,7 +2,7 @@ package com.sunrin.sunrin.global.auth.application;
 
 import com.sunrin.sunrin.global.auth.dao.UserRepository;
 import com.sunrin.sunrin.global.auth.domain.UserLoginEntity;
-import com.sunrin.sunrin.global.auth.dto.UserLoginEntityUserDetails;
+import com.sunrin.sunrin.global.auth.domain.UserLoginEntityUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

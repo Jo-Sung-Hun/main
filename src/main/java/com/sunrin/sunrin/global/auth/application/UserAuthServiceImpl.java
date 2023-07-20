@@ -7,13 +7,14 @@ import com.sunrin.sunrin.global.auth.dao.UserRepository;
 import com.sunrin.sunrin.global.auth.domain.UserLoginEntity;
 import com.sunrin.sunrin.global.auth.dto.JWTResult;
 import com.sunrin.sunrin.global.auth.dto.UserLoginData;
-import com.sunrin.sunrin.global.auth.dto.UserLoginEntityUserDetails;
+import com.sunrin.sunrin.global.auth.domain.UserLoginEntityUserDetails;
 import com.sunrin.sunrin.global.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
@@ -24,25 +25,29 @@ public class UserAuthServiceImpl implements UserAuthService {
     private final ObjectMapper objectMapper;
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
-    public UserAuthServiceImpl(UserAuthRepositoryImpl userAuthRepository, PrincipalDetailsService principalDetailsService, ObjectMapper objectMapper, JwtUtil jwtUtil, UserRepository userRepository) {
+    public UserAuthServiceImpl(UserAuthRepositoryImpl userAuthRepository, PrincipalDetailsService principalDetailsService, ObjectMapper objectMapper, JwtUtil jwtUtil, UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userAuthRepository = userAuthRepository;
         this.principalDetailsService = principalDetailsService;
         this.objectMapper = objectMapper;
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+
     }
     @Override
     public String login(UserLoginData userLoginData, HttpServletRequest httpServletRequest) throws JsonProcessingException {
         UserLoginEntityUserDetails result = (UserLoginEntityUserDetails) principalDetailsService.loadUserByUsername(userLoginData.getUserLoginEmail());
-
-        if (!result.getPassword().equals(userLoginData.getUserLoginPassword())) {
-            response(new ResponseEntity("비밀번호가 일치하지 않습니다.", null, 400));
+        logger.info("result password {}" ,result.getPassword());
+        logger.info("userLoginData {}", userLoginData.getUserLoginPassword());
+        if (!bCryptPasswordEncoder.matches(userLoginData.getUserLoginPassword(), result.getPassword())) {
+            throw new IllegalStateException();
         }
         String accessToken = jwtUtil.accessTokenGenerateToken(result, httpServletRequest);
-        String refreshToken = jwtUtil.refreshTokenGenerateToken(result, httpServletRequest);
         logger.info("UserLoginEntityUserDetails: {}", objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
-        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(new JWTResult(accessToken, refreshToken));
+        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(new JWTResult(accessToken));
     }
     private ResponseEntity response(ResponseEntity responseEntity) {
         if (responseEntity == null) {

@@ -4,12 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.sunrin.sunrin.global.auth.dao.UserRepository;
 import com.sunrin.sunrin.global.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class GlobalBeanConfig {
+    @Autowired
+    private UserRepository userRepository;
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
@@ -20,6 +24,6 @@ public class GlobalBeanConfig {
     }
     @Bean
     public JwtUtil jwtUtil() {
-        return new JwtUtil(objectMapper());
+        return new JwtUtil(objectMapper(), userRepository);
     }
 }

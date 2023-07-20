@@ -9,13 +9,11 @@ import lombok.*;
 @Builder
 public class JWTResult {
     private String accessToken;
-    private String refreshToken;
 
     @Override
     public String toString() {
         return "JWTResult{" +
                 "accessToken='" + accessToken + '\'' +
-                ", refreshToken='" + refreshToken + '\'' +
                 '}';
     }
 }
