@@ -23,7 +23,7 @@ public class JwtServiceController {
         this.userAuthService = userAuthService;
 
     }
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/v1/test", method = RequestMethod.GET)
     public Object test(HttpServletRequest httpServletRequest){
         String jwt = String.valueOf(httpServletRequest.getHeader("Authorization").startsWith("Bearer"));
         logger.info(jwt);
