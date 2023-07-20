@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,10 +18,10 @@ public class UserLoginEntity implements Serializable {
     private String userLoginUsername;
     @Column(nullable = false, length = 9999999)
     private String userLoginPassword;
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<PartyEntity> partyEntities;
     private String stopwatchLocalDateTime;
     private String role;
+    @OneToOne
+    private PartyEntity partyEntity;
     @Builder
     public UserLoginEntity(String userLoginUsername, String userLoginPassword) {
         this.role = "ROLE_USER";
@@ -54,14 +53,6 @@ public class UserLoginEntity implements Serializable {
 
     public void setUserLoginUsername(String userLoginUsername) {
         this.userLoginUsername = userLoginUsername;
-    }
-
-    public List<PartyEntity> getPartyEntities() {
-        return partyEntities;
-    }
-
-    public void setPartyEntities(List<PartyEntity> partyEntities) {
-        this.partyEntities = partyEntities;
     }
 
     public UUID getUuid() {

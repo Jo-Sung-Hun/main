@@ -11,6 +11,7 @@ import com.sunrin.sunrin.party.application.PartyCRUDServiceImpl;
 import com.sunrin.sunrin.party.domain.PartyEntity;
 import com.sunrin.sunrin.party.domain.StopWatch;
 import com.sunrin.sunrin.party.dto.PartyDTO;
+import com.sunrin.sunrin.party.dto.PartyJoinDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -39,7 +41,27 @@ public class PartyCRUDController {
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
     }
+    // 전체 파티 정보 자겨오기
+    @RequestMapping(value = "/api/v1/party", method = RequestMethod.GET)
+    public Object getParty(HttpServletRequest httpServletRequest) throws JsonProcessingException {
+        return new ResponseEntity<>(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(partyCRUDService.findAll()), HttpStatus.OK);
+    }
+    // 파티 참가
+    @RequestMapping(value = "/api/v1/party/join", method = RequestMethod.POST)
+    public Object joinParty(HttpServletRequest httpServletRequest, @RequestBody String json) throws JsonProcessingException {
+        logger.info("json {}", json);
+        PartyJoinDTO party = objectMapper.readValue(json, PartyJoinDTO.class);
+        if (httpServletRequest.getHeader("Authorization").startsWith("Bearer")){
+            String result = httpServletRequest.getHeader("Authorization").substring(7);
 
+            logger.info("Bearer {}" , result);
+            Optional<UserLoginEntity> findResult = userRepository.findByUserLoginUsername(jwtUtil.getUsernameFromToken(result));
+            partyCRUDService.addUserToParty(party, findResult.get().getUserLoginUsername());
+        }
+        return new ResponseEntity<>(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(party), HttpStatus.OK);
+    }
+
+    // 파티 생성하기
     @RequestMapping(value = "/api/v1/party", method = RequestMethod.POST)
     public Object createParty(HttpServletRequest httpServletRequest, @RequestBody String json) throws JsonProcessingException {
         logger.info("json {}", json);
@@ -49,8 +71,7 @@ public class PartyCRUDController {
 
             logger.info("Bearer {}" , result);
             Optional<UserLoginEntity> findResult = userRepository.findByUserLoginUsername(jwtUtil.getUsernameFromToken(result));
-            party.setOwnerUserLoginEntity(findResult.get());
-            findResult.get().getPartyEntities().add(party);
+            party.setOwnerUsername(findResult.get().getUserLoginUsername());
             partyCRUDService.update(party);
         }
         logger.info("party {}", party);
@@ -77,6 +98,11 @@ public class PartyCRUDController {
         userRepository.save(result.get());
 
         return new ResponseEntity<>(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result)), HttpStatus.OK);
+    }
+    @RequestMapping(value = "/api/v1/user/stopwatch/findall", method = RequestMethod.GET)
+    public Object findAllParty() throws JsonProcessingException {
+        List<UserLoginEntity> userLoginEntities = userRepository.findAll();
+        return new ResponseEntity<>(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(userLoginEntities), HttpStatus.OK);
     }
 
 }

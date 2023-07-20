@@ -1,7 +1,9 @@
 package com.sunrin.sunrin.party.application;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sunrin.sunrin.party.domain.PartyEntity;
 import com.sunrin.sunrin.party.dto.PartyDTO;
+import com.sunrin.sunrin.party.dto.PartyJoinDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +15,8 @@ public interface PartyCRUDService {
     void delete(PartyDTO partyDTO);
     Boolean isExistParty(PartyDTO partyDTO);
     List<PartyEntity> findByOwnerUsername(String ownerUsername);
-    Boolean addUserToParty(PartyDTO partyDTO, String username);
 
+    Boolean addUserToParty(PartyJoinDTO partyDTO, String addTargetUsername) throws JsonProcessingException;
+
+    List<PartyEntity> findAll();
 }

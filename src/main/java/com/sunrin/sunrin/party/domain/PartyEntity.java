@@ -1,10 +1,8 @@
 package com.sunrin.sunrin.party.domain;
 
-import com.sunrin.sunrin.global.auth.domain.UserLoginEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -21,9 +19,8 @@ public class PartyEntity {
     private String partyName;
     private String partyPassword;
     private Integer batingNum;
-    @OneToOne
-    private UserLoginEntity ownerUserLoginEntity;
-    @OneToMany(fetch = jakarta.persistence.FetchType.LAZY)
-    private List<UserLoginEntity> userLoginEntities;
+    private String ownerUsername;
+    private String userLoginEntities;
+
 
 }
