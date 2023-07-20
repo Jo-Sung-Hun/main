@@ -2,10 +2,7 @@ package com.sunrin.sunrin.global.auth.domain;
 
 
 import com.sunrin.sunrin.global.auth.dto.UserLoginData;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Builder;
 
 import java.io.Serializable;
@@ -20,11 +17,15 @@ public class UserLoginEntity implements Serializable {
     private String userLoginUsername;
     @Column(nullable = false, length = 9999999)
     private String userLoginPassword;
+    @OneToOne
+    private UserServiceInfoEntity userServiceInfoEntity;
     @Builder
     public UserLoginEntity(String userLoginUsername, String userLoginPassword) {
         this.userLoginUsername = userLoginUsername;
         this.userLoginPassword = userLoginPassword;
+
     }
+
     @Builder
     public UserLoginEntity(UserLoginData accountReqDto) {
         this.userLoginUsername = accountReqDto.getUserLoginEmail();

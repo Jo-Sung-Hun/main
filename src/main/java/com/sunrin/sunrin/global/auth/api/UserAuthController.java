@@ -80,4 +80,5 @@ public class UserAuthController {
         logger.info("loginResult {}", userResultToString);
         return new ResponseEntity<>(objectMapper.writeValueAsString(loginResult), HttpStatus.ACCEPTED);
     }
+
 }
