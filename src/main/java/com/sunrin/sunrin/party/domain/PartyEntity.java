@@ -21,6 +21,6 @@ public class PartyEntity {
     private Integer batingNum;
     private String ownerUsername;
     private String userLoginEntities;
-
+    private Integer goalScore;
 
 }
