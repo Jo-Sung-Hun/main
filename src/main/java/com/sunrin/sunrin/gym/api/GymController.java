@@ -29,7 +29,7 @@ public class GymController {
     public Object getGymList(HttpServletRequest httpServletRequest) {
         return new ResponseEntity<>(gymCRUDService.findAll(), org.springframework.http.HttpStatus.OK);
     }
-    @RequestMapping(value = "/api/v1/gym ", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/v1/gym", method = RequestMethod.POST)
     public Object addGym(HttpServletRequest httpServletRequest, @RequestBody String json) throws JsonProcessingException {
         GymEntityDTO gymEntityDTO = objectMapper.readValue(json, GymEntityDTO.class);
         logger.info("gym Data: {}" ,gymEntityDTO.toString());

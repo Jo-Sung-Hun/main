@@ -16,12 +16,14 @@ public class StoreComponent implements Serializable {
     private String category;
     private String name;
     private String price;
+    private String iamgeUrl;
 
     @Builder
-    public StoreComponent(String category, String name, String price) {
+    public StoreComponent(String category, String name, String price, String iamgeUrl) {
         this.category = category;
         this.name = name;
         this.price = price;
+        this.iamgeUrl = iamgeUrl;
     }
 
     public String getCategory() {
@@ -52,6 +54,15 @@ public class StoreComponent implements Serializable {
 
     public String getPrice() {
         return price;
+    }
+
+    public String getIamgeUrl() {
+
+        return iamgeUrl;
+    }
+
+    public void setIamgeUrl(String iamgeUrl) {
+        this.iamgeUrl = iamgeUrl;
     }
 
     public void setPrice(String price) {
