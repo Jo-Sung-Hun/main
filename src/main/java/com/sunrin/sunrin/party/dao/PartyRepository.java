@@ -11,4 +11,5 @@ public interface PartyRepository extends JpaRepository<PartyEntity, UUID> {
     List<PartyEntity> findAllByOwnerUsername(String userLoginEntity);
     PartyEntity findByPartyName(String partyName);
     PartyEntity findByUuid(UUID uuid);
+    PartyEntity deleteByUuid(UUID uuid);
 }

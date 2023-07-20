@@ -49,7 +49,7 @@ public class StoreServiceImpl implements StoreService{
 
     @Override
     public List<StoreComponent> findByStoreNameOrStoreMaker(String storeName, String storeMaker) {
-        return storeRepository.findAllByMakerAndName(storeMaker, storeName);
+        return storeRepository.findAllByName(storeName);
     }
 
     @Override

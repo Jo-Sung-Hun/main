@@ -34,7 +34,6 @@ public class StoreController {
         String jwtToken = httpServletRequest.getHeader("Authorization").substring(7);
         logger.info("jwtToken {}", jwtToken);
         StoreComponent storeComponent = objectMapper.readValue(json, StoreComponent.class);
-        storeComponent.setMaker(jwtUtil.getUsernameFromToken(jwtToken));
         return new ResponseEntity<>(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(storeService.create(storeComponent)), org.springframework.http.HttpStatus.OK);
     }
     @RequestMapping(value = "/api/v1/store", method = RequestMethod.GET)
@@ -42,6 +41,7 @@ public class StoreController {
         StoreDTO storeDTO = objectMapper.readValue(json, StoreDTO.class);
         return new ResponseEntity<>(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(storeService.findByCategory(storeDTO.getCategory())), org.springframework.http.HttpStatus.OK);
     }
+
     @RequestMapping(value = "/api/v1/store/findall", method = RequestMethod.GET)
 
     public Object getStoreComponentAll() throws JsonProcessingException {

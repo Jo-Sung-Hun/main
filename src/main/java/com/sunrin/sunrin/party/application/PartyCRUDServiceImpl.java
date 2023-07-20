@@ -81,4 +81,9 @@ public class PartyCRUDServiceImpl implements PartyCRUDService{
     public List<PartyEntity> findAll() {
         return partyRepository.findAll();
     }
+
+    @Override
+    public PartyEntity deleteByUuid(String uuid) {
+        return partyRepository.deleteByUuid(UUID.fromString(uuid));
+    }
 }

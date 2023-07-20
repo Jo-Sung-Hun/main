@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface StoreRepository extends JpaRepository<StoreComponent, UUID> {
-    List<StoreComponent> findAllByMakerAndName(String maker, String name);
+    List<StoreComponent> findAllByName(String name);
     List<StoreComponent> findAllByCategory(String category);
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class GymCRUDServiceImpl {
@@ -21,5 +22,8 @@ public class GymCRUDServiceImpl {
     }
     public GymEntity save(GymEntityDTO gymEntityDTO){
         return gymRepository.save(gymEntityDTO.toEntity());
+    }
+    public GymEntity findById(UUID uuid){
+        return gymRepository.findById(uuid).orElseThrow(() -> new NullPointerException("GymEntity is not exist"));
     }
 }

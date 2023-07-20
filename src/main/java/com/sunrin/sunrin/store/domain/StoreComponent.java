@@ -13,24 +13,16 @@ public class StoreComponent implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid2")
     private UUID uuid;
+    private
+    String category;
     private String name;
-    private String maker;
-    private Double star;
-    private Integer reviewNum;
-    private String imageUrl;
-    private String storeTag;
-    private String storeTag2;
-    private String category;
+    private String price;
+
     @Builder
-    public StoreComponent(String name, String maker, Double star, Integer reviewNum, String storeTag,String storeTag2 , String imageUrl, String category) {
-        this.name = name;
+    public StoreComponent(String category, String name, String price) {
         this.category = category;
-        this.storeTag2 = storeTag2;
-        this.maker = maker;
-        this.star = star;
-        this.reviewNum = reviewNum;
-        this.storeTag = storeTag;
-        this.imageUrl = imageUrl;
+        this.name = name;
+        this.price = price;
     }
 
     public String getCategory() {
@@ -43,15 +35,6 @@ public class StoreComponent implements Serializable {
 
     public StoreComponent() {
     }
-
-    public String getStoreTag2() {
-        return storeTag2;
-    }
-
-    public void setStoreTag2(String storeTag2) {
-        this.storeTag2 = storeTag2;
-    }
-
     public UUID getUuid() {
         return uuid;
     }
@@ -68,43 +51,11 @@ public class StoreComponent implements Serializable {
         this.name = name;
     }
 
-    public String getMaker() {
-        return maker;
+    public String getPrice() {
+        return price;
     }
 
-    public void setMaker(String maker) {
-        this.maker = maker;
-    }
-
-    public Double getStar() {
-        return star;
-    }
-
-    public void setStar(Double star) {
-        this.star = star;
-    }
-
-    public Integer getReviewNum() {
-        return reviewNum;
-    }
-
-    public void setReviewNum(Integer reviewNum) {
-        this.reviewNum = reviewNum;
-    }
-
-    public String getStoreTag() {
-        return storeTag;
-    }
-
-    public void setStoreTag(String storeTag) {
-        this.storeTag = storeTag;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

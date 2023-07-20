@@ -5,12 +5,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunrin.sunrin.gym.application.GymCRUDServiceImpl;
 import com.sunrin.sunrin.gym.dto.GymEntityDTO;
+import com.sunrin.sunrin.party.dto.PartyJoinDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @RestController
 public class GymController {
@@ -32,5 +38,10 @@ public class GymController {
         GymEntityDTO gymEntityDTO = objectMapper.readValue(json, GymEntityDTO.class);
         logger.info("gym Data: {}" ,gymEntityDTO.toString());
         return new ResponseEntity<>(gymCRUDService.save(gymEntityDTO), org.springframework.http.HttpStatus.OK);
+    }
+    @RequestMapping(value = "/api/v1/gym/findbyid", method = RequestMethod.GET)
+    public Object getGym(HttpServletRequest httpServletRequest, @RequestBody String json) throws JsonProcessingException {
+        PartyJoinDTO gymEntityDTO = objectMapper.readValue(json, PartyJoinDTO.class);
+        return new ResponseEntity<>(gymCRUDService.findById(UUID.fromString(gymEntityDTO.getJoinTargetPartyUUID())), org.springframework.http.HttpStatus.OK);
     }
 }

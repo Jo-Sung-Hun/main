@@ -19,4 +19,5 @@ public interface PartyCRUDService {
     Boolean addUserToParty(PartyJoinDTO partyDTO, String addTargetUsername) throws JsonProcessingException;
 
     List<PartyEntity> findAll();
+    PartyEntity deleteByUuid(String uuid);
 }

@@ -60,6 +60,14 @@ public class PartyCRUDController {
         }
         return new ResponseEntity<>(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(party), HttpStatus.OK);
     }
+    @RequestMapping(value = "/api/v1/party/del", method = RequestMethod.POST)
+    public Object deleteByUuid(HttpServletRequest httpServletRequest, @RequestBody String json) throws JsonProcessingException {
+        logger.info("json {}", json);
+        PartyJoinDTO party = objectMapper.readValue(json, PartyJoinDTO.class);
+        PartyEntity party1 = partyCRUDService.deleteByUuid(party.getJoinTargetPartyUUID());
+        return new ResponseEntity<>(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(party1), HttpStatus.OK);
+
+    }
 
     // 파티 생성하기
     @RequestMapping(value = "/api/v1/party", method = RequestMethod.POST)
