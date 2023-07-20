@@ -13,8 +13,7 @@ public class StoreComponent implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid2")
     private UUID uuid;
-    private
-    String category;
+    private String category;
     private String name;
     private String price;
 
