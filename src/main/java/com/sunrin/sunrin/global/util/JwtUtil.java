@@ -69,6 +69,25 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
+    // 리프레쉬 토큰 재발급 로직
+    @Async
+    public String refreshTokenGenerateToken(UserLoginEntityUserDetails username, String refreshToken, HttpServletRequest httpServletRequest) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + accessTokenExpiration);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Date date = new Date();
+        Date date2 = Date.from(localDateTime.plusMonths(1).atZone(java.time.ZoneId.systemDefault()).toInstant());
+        logger.info(String.valueOf(date2.getTime()));
+        return Jwts.builder()
+                .setSubject(username.getUsername())
+                .setIssuedAt(date)
+                .setAudience(httpServletRequest.getRemoteAddr())
+                .setExpiration(date2)
+                .setNotBefore(new Date(date.getTime() + 1000))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
     public void responseError(ServletResponse response, Integer code, String errorMsg) {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         // encode 이슈 있음

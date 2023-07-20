@@ -23,7 +23,7 @@ public class PartyEntity {
     private Integer batingNum;
     @OneToOne
     private UserLoginEntity ownerUserLoginEntity;
-    @OneToMany(fetch = jakarta.persistence.FetchType.LAZY, mappedBy = "partyEntity")
+    @OneToMany(fetch = jakarta.persistence.FetchType.LAZY)
     private List<UserLoginEntity> userLoginEntities;
 
 }
