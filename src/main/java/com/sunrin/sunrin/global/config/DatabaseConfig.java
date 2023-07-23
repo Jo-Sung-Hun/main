@@ -3,9 +3,6 @@ package com.sunrin.sunrin.global.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
@@ -24,13 +21,14 @@ public class DatabaseConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driverClassName);
-        dataSource.setUsername(userName);
-        dataSource.setUrl(url);
-        dataSource.setPassword(password);
+        dataSource.setUsername("root");
+        dataSource.setUrl("jdbc:mysql://pickservice.sldb.iwinv.net:3306/Chain");
+        dataSource.setPassword("Rvb875DL0zdO");
+
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         return dataSource;
     }
-    @Value("${spring.redis.host}")
+/*    @Value("${spring.redis.host}")
     private String redisHost;
     @Value("${spring.redis.port}")
     private int redisPort;
@@ -45,5 +43,5 @@ public class DatabaseConfig {
        // redisStandaloneConfiguration.setUsername("root");
         redisStandaloneConfiguration.setPort(redisPort);
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
-    }
+    }*/
 }
